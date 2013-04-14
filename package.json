@@ -1,0 +1,20 @@
+{
+  "name": "docular-doc-api-angular",
+  "version": "0.0.0",
+  "description": "Docular doc api for angular. Logic for the parsing and documentation generation as well as CSS and angular module extneions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitsome/docular-doc-api-angular.git"
+  },
+  "keywords": [
+    "Docular",
+    "documentation",
+    "angular"
+  ],
+  "author": "John David Martin",
+  "license": "MIT"
+}
