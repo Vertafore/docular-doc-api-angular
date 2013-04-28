@@ -29,9 +29,9 @@ var BOOLEAN_ATTR = {
 };
 
 var dashCase = function (name){
-  return name.replace(DASH_CASE_REGEXP, function(letter, pos) {
-    return (pos ? '-' : '') + letter.toLowerCase();
-  });
+    return name.replace(DASH_CASE_REGEXP, function(letter, pos) {
+        return (pos ? '-' : '') + letter.toLowerCase();
+    });
 };
 
 var trim = function (text) {
@@ -151,10 +151,6 @@ module.exports =  {
         'example' : function (text) {
             var self = this;
             self.example = self.markdown(text);
-        },
-
-        'scenario' : function (text) {
-
         }
 
     },
