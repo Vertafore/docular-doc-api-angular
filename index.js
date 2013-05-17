@@ -151,9 +151,6 @@ module.exports =  {
         'example' : function (text) {
             var self = this;
             self.example = self.markdown(text);
-        },
-
-        'scenario' : function (text) {
         }
 
     },

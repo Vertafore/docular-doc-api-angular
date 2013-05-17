@@ -53,6 +53,7 @@ exports.Example.prototype.addSource = function(name, content) {
     this.deps.push(name);
   }
   if (ext == 'scenario') {
+    this.scenarios = this.scenarios || [];
     this.scenarios.push(content);
   }
 };
