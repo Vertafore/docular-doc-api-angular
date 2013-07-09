@@ -73,6 +73,27 @@ var trim = function (text) {
     return lines.join('\n');
 };
 
+//rendering function for docTypes that need the standard methods/properties/params/returns/depends
+var standardFunction = function(dom){
+    var self = this;
+    var htmlMethods = self.doc_api_extensions.html;
+    var name = self.name.match(/^angular(\.mock)?\.(\w+)$/) ? self.name : self.name.split(/\./).pop();
+
+    dom.h('Usage', function() {
+        dom.code(function() {
+            dom.text(name);
+            dom.text('(');
+            htmlMethods.parameterParse.call(self, dom, ', ');
+            dom.text(');');
+        });
+
+        htmlMethods.parameters.call(self, dom);
+        htmlMethods.this.call(self, dom);
+        htmlMethods.returns.call(self, dom);
+    });
+    htmlMethods.method_properties_events.call(self, dom);
+};
+
 /*============ EXPORT THE DOC API CONFIGURATION ============*/
 
 module.exports =  {
@@ -237,26 +258,9 @@ module.exports =  {
 
     html : {
 
-        function: function(dom){
-            var self = this;
-            var htmlMethods = self.doc_api_extensions.html;
-            var name = self.name.match(/^angular(\.mock)?\.(\w+)$/) ? self.name : self.name.split(/\./).pop();
-
-            dom.h('Usage', function() {
-                dom.code(function() {
-                    dom.text(name);
-                    dom.text('(');
-                    htmlMethods.parameterParse.call(self, dom, ', ');
-                    dom.text(');');
-                });
-
-                htmlMethods.parameters.call(self, dom);
-                htmlMethods.this.call(self, dom);
-                htmlMethods.returns.call(self, dom);
-            });
-            htmlMethods.method_properties_events.call(self, dom);
-        },
-
+        //both function and controller will use the default "standardFunction" rendering method
+        function: standardFunction,
+        controller: standardFunction,
 
         directive: function(dom){
             var self = this;

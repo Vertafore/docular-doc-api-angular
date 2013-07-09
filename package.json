@@ -1,6 +1,6 @@
 {
   "name": "docular-doc-api-angular",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Docular doc api for angular. Logic for the parsing and documentation generation as well as CSS and angular module extneions.",
   "main": "index.js",
   "scripts": {
