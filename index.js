@@ -271,7 +271,7 @@ module.exports =  {
 				var prefix = self.prefix || '';
                 if (restrict.match(/E/)) {
                     dom.text('as element (see ');
-                    dom.tag('a', {href:'guide/ie'}, 'IE restrictions');
+                    dom.tag('a', {href:'documentation/angular/guide/ie'}, 'IE restrictions');
                     dom.text(')');
                     dom.code(function() {
                         dom.text('<');
