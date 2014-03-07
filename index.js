@@ -268,14 +268,15 @@ module.exports =  {
 
             dom.h('Usage', function() {
                 var restrict = self.restrict || 'AC';
+				var prefix = self.prefix || '';
                 if (restrict.match(/E/)) {
                     dom.text('as element (see ');
-                    dom.tag('a', {href:'guide/ie'}, 'IE restrictions');
+                    dom.tag('a', {href:'documentation/angular/guide/ie'}, 'IE restrictions');
                     dom.text(')');
                     dom.code(function() {
                         dom.text('<');
                         dom.text(dashCase(self.shortName));
-                        renderParams('\n       ', '="', '"');
+                        renderParams('\n       '+prefix, '="', '"');
                         dom.text('>\n</');
                         dom.text(dashCase(self.shortName));
                         dom.text('>');
@@ -286,8 +287,8 @@ module.exports =  {
                     dom.text('as attribute');
                     dom.code(function() {
                         dom.text('<' + element + ' ');
-                        dom.text(dashCase(self.shortName));
-                        renderParams('\n     ', '="', '"', true);
+                        dom.text(prefix+dashCase(self.shortName));
+                        renderParams('\n     '+prefix, '="', '"', true);
                         dom.text('>\n   ...\n');
                         dom.text('</' + element + '>');
                     });
@@ -317,7 +318,7 @@ module.exports =  {
                         dom.text(prefix);
                         dom.text(param.optional ? '[' : '');
                         var parts = param.name.split('|');
-                        dom.text(parts[skipSelf ? 0 : 1] || parts[0]);
+                        dom.text(dashCase(parts[skipSelf ? 0 : 1] || parts[0]));
                     }
 
                     if (BOOLEAN_ATTR[param.name]) {
