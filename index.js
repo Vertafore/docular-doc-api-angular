@@ -265,6 +265,11 @@ module.exports =  {
         directive: function(dom){
             var self = this;
             var htmlMethods = self.doc_api_extensions.html;
+            var id = self.id,
+                p = id.indexOf(':');
+            if (p !== -1) {
+                id = id.substr(p+1);
+            }
 
             dom.h('Usage', function() {
                 var restrict = self.restrict || 'AC';
@@ -275,10 +280,10 @@ module.exports =  {
                     dom.text(')');
                     dom.code(function() {
                         dom.text('<');
-                        dom.text(dashCase(self.shortName));
+                        dom.text(dashCase(id));
                         renderParams('\n       '+prefix, '="', '"');
                         dom.text('>\n</');
-                        dom.text(dashCase(self.shortName));
+                        dom.text(dashCase(id));
                         dom.text('>');
                     });
                 }
@@ -287,7 +292,7 @@ module.exports =  {
                     dom.text('as attribute');
                     dom.code(function() {
                         dom.text('<' + element + ' ');
-                        dom.text(prefix+dashCase(self.shortName));
+                        dom.text(prefix+dashCase(id));
                         renderParams('\n     '+prefix, '="', '"', true);
                         dom.text('>\n   ...\n');
                         dom.text('</' + element + '>');
@@ -298,7 +303,7 @@ module.exports =  {
                     var element = self.element || 'ANY';
                     dom.code(function() {
                         dom.text('<' + element + ' class="');
-                        dom.text(dashCase(self.shortName));
+                        dom.text(dashCase(id));
                         renderParams(' ', ': ', ';', true);
                         dom.text('">\n   ...\n');
                         dom.text('</' + element + '>');
