@@ -344,8 +344,13 @@ module.exports =  {
                             dom.text(self.usage);
                         } else {
                             dom.text('{{ ');
-                            dom.text(self.shortName);
-                            dom.text('_expression | ');
+                            if (self.param && self.param.length) {
+                                dom.text(self.param[0].name);
+                                dom.text(' | ');
+                            } else {
+                                dom.text(self.shortName);
+                                dom.text('_expression | ');
+                            }
                             dom.text(self.shortName);
 
                             //let's use the inherited parameterParse from the default api
