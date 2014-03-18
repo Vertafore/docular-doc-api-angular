@@ -3,6 +3,7 @@
 /*=========== DEPENDENCIES =============*/
 
 var Example = require('./resources/example.js').Example;
+var grunt = require('grunt');
 
 
 /*=========== PRIVATE VARIABLES AND METHODS ===========*/
@@ -265,6 +266,11 @@ module.exports =  {
         directive: function(dom){
             var self = this;
             var htmlMethods = self.doc_api_extensions.html;
+            var id = self.id,
+                p = id.indexOf(':');
+            if (p !== -1) {
+                id = id.substr(p+1);
+            }
 
             dom.h('Usage', function() {
                 var restrict = self.restrict || 'AC';
@@ -275,10 +281,10 @@ module.exports =  {
                     dom.text(')');
                     dom.code(function() {
                         dom.text('<');
-                        dom.text(dashCase(self.shortName));
+                        dom.text(dashCase(id));
                         renderParams('\n       '+prefix, '="', '"');
                         dom.text('>\n</');
-                        dom.text(dashCase(self.shortName));
+                        dom.text(dashCase(id));
                         dom.text('>');
                     });
                 }
@@ -287,7 +293,7 @@ module.exports =  {
                     dom.text('as attribute');
                     dom.code(function() {
                         dom.text('<' + element + ' ');
-                        dom.text(prefix+dashCase(self.shortName));
+                        dom.text(prefix+dashCase(id));
                         renderParams('\n     '+prefix, '="', '"', true);
                         dom.text('>\n   ...\n');
                         dom.text('</' + element + '>');
@@ -298,7 +304,7 @@ module.exports =  {
                     var element = self.element || 'ANY';
                     dom.code(function() {
                         dom.text('<' + element + ' class="');
-                        dom.text(dashCase(self.shortName));
+                        dom.text(dashCase(id));
                         renderParams(' ', ': ', ';', true);
                         dom.text('">\n   ...\n');
                         dom.text('</' + element + '>');
@@ -337,21 +343,30 @@ module.exports =  {
         filter: function(dom){
             var self = this;
             var htmlMethods = self.doc_api_extensions.html;
+            var config = grunt.config('docular');
+            var startSymbol = config['angularStartSymbol'] || '{{';
+            var endSymbol = config['angularEndSymbol'] || '{{';
+
             dom.h('Usage', function() {
                 dom.h('In HTML Template Binding', function() {
                     dom.tag('code', function() {
                         if (self.usage) {
                             dom.text(self.usage);
                         } else {
-                            dom.text('{{ ');
-                            dom.text(self.shortName);
-                            dom.text('_expression | ');
+                            dom.text(startSymbol+' ');
+                            if (self.param && self.param.length) {
+                                dom.text(self.param[0].name);
+                                dom.text(' | ');
+                            } else {
+                                dom.text(self.shortName);
+                                dom.text('_expression | ');
+                            }
                             dom.text(self.shortName);
 
                             //let's use the inherited parameterParse from the default api
                             htmlMethods.parameterParse.call(self, dom, ':', true);
 
-                            dom.text(' }}');
+                            dom.text(' '+endSymbol);
                         }
                     });
                 });
