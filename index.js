@@ -3,6 +3,7 @@
 /*=========== DEPENDENCIES =============*/
 
 var Example = require('./resources/example.js').Example;
+var grunt = require('grunt');
 
 
 /*=========== PRIVATE VARIABLES AND METHODS ===========*/
@@ -342,13 +343,17 @@ module.exports =  {
         filter: function(dom){
             var self = this;
             var htmlMethods = self.doc_api_extensions.html;
+            var config = grunt.config('docular');
+            var startSymbol = config['angularStartSymbol'] || '{{';
+            var endSymbol = config['angularEndSymbol'] || '{{';
+
             dom.h('Usage', function() {
                 dom.h('In HTML Template Binding', function() {
                     dom.tag('code', function() {
                         if (self.usage) {
                             dom.text(self.usage);
                         } else {
-                            dom.text('{{ ');
+                            dom.text(startSymbol+' ');
                             if (self.param && self.param.length) {
                                 dom.text(self.param[0].name);
                                 dom.text(' | ');
@@ -361,7 +366,7 @@ module.exports =  {
                             //let's use the inherited parameterParse from the default api
                             htmlMethods.parameterParse.call(self, dom, ':', true);
 
-                            dom.text(' }}');
+                            dom.text(' '+endSymbol);
                         }
                     });
                 });
