@@ -15,6 +15,15 @@
     "documentation",
     "angular"
   ],
-  "author": "John David Martin",
-  "license": "MIT"
+  "author": {
+    "name": "John David Martin"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gitsome/docular-doc-api-angular/issues"
+  },
+  "readme": "ERROR: No README data found!",
+  "homepage": "https://github.com/gitsome/docular-doc-api-angular",
+  "_id": "docular-doc-api-angular@0.0.2",
+  "_from": "docular-doc-api-angular@*"
 }

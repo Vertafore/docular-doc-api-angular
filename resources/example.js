@@ -84,13 +84,13 @@ exports.Example.prototype.toHtmlTabs = function() {
   var out = [],
       self = this;
 
-  out.push('<div class="tabbable">');
+  out.push('<tabset>');
   htmlTabs(this.html);
   htmlTabs(this.css);
   htmlTabs(this.js);
   htmlTabs(this.unit);
   htmlTabs(this.scenario);
-  out.push('</div>');
+  out.push('</tabset>');
   return out.join('');
 
   function htmlTabs(sources) {
@@ -105,23 +105,25 @@ exports.Example.prototype.toHtmlTabs = function() {
       if (name == 'scenario.js') name = 'End to end test';
 
       out.push(
-        '<div class="tab-pane" title="' + name + '">\n' +
-          '<pre class="prettyprint linenums" ng-set-text="' + source.id + '"' + wrap + '></pre>\n' +
-          (isCss
-             ? ('<style type="text/css" id="' + source.id + '">' + source.content + '</style>\n')
-             : ('<script type="text/ng-template" id="' + source.id + '">' + source.content + '</script>\n') ) +
-        '</div>\n');
+        '<tab select="highlight()" syntaxhighlighter heading="' + name + '">\n' +
+          '<script class="brush: ' + (isCss ? 'css' : 'js') + ';" type="syntaxhighlighter"><![CDATA[\n' + source.content + ']]></script></tab>\n');
     });
   }
 };
 
 exports.Example.prototype.toHtmlEmbed = function() {
   var out = [];
-  out.push('<div class="well doc-example-live"');
-  out.push(' ng-embed-app="' + this.module + '"');
-  out.push(' ng-set-html="' + this.html[0].id + '"');
-  out.push(' ng-eval-javascript="' + ids(this.js) + '">');
-  out.push('</div>');
+  out.push('<script type="text/plain" example-runner class="ng-hide">'); //<div class="well doc-example-live"');
+  
+  var jsonDump = {
+      module: this.module,
+      html: this.html,
+      js: this.js,
+      css: this.css
+  };
+  out.push(JSON.stringify(jsonDump));
+  out.push('</script>');
+
   return out.join('');
 };
 
