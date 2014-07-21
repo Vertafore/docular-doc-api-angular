@@ -95,18 +95,14 @@ exports.Example.prototype.toHtmlTabs = function() {
 
   function htmlTabs(sources) {
     sources.forEach(function(source) {
-      var wrap = '',
-          isCss = source.name.match(/\.css$/),
+      var fileType = source.name.match(/[^\.]+$/),
           name = source.name;
-
-      if (name === 'index.html') {
-        wrap = ' ng-html-wrap="' + self.module + ' ' + self.deps.join(' ') + '"';
-      }
+      fileType = fileType[0];
       if (name == 'scenario.js') name = 'End to end test';
 
       out.push(
-        '<tab select="highlight()" syntaxhighlighter heading="' + name + '">\n' +
-          '<script class="brush: ' + (isCss ? 'css' : 'js') + ';" type="syntaxhighlighter"><![CDATA[\n' + source.content + ']]></script></tab>\n');
+        '<tab select="highlight()" heading="' + name + '">\n' +
+          '<source-viewer file-type="' + fileType + '">' + source.content + '</source-viewer></tab>\n');
     });
   }
 };
@@ -126,4 +122,5 @@ exports.Example.prototype.toHtmlEmbed = function() {
 
   return out.join('');
 };
+
 
